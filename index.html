@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html
+    class="w-mod-js wf-inter-n4-active wf-inter-n5-active wf-inter-n6-active wf-inter-n8-active wf-inter-n9-active wf-inter-n7-active wf-active">
+
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+    <title>PaLM Staking</title>
+
+
+    <link rel="apple-touch-icon" sizes="180x180" href="favicon/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="favicon/favicon-16x16.png">
+    <link rel="manifest" href="favicon/site.webmanifest">
+    <meta name="msapplication-TileColor" content="#da532c">
+    <meta name="theme-color" content="#ffffff">
+
+
+    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <script src="vendor/bootstrap/js/bootstrap.min.js"></script>
+    <meta content="width=device-width, initial-scale=1" name="viewport">
+    <link href="stylesh.css" rel="stylesheet" type="text/css">
+    <link href="additional-styles.css" rel="stylesheet" type="text/css">
+    <link href="toastify.css" rel="stylesheet" type="text/css">
+    <link href="img/logo.png" rel="shortcut icon" type="image/x-icon">
+    <link href="img/logo.png" rel="apple-touch-icon">
+    <style>
+        @font-face {
+            font-family: "Source Code Variable";
+            src: url("font/02a670d8eb6755beb38a5d2353d2b81f.eot");
+            src: url("font/02a670d8eb6755beb38a5d2353d2b81f.eot?#iefix")format("embedded-opentype"),
+                url("font/02a670d8eb6755beb38a5d2353d2b81f.woff")format("woff"),
+                url("font/02a670d8eb6755beb38a5d2353d2b81f.woff2")format("woff2"),
+                url("font/02a670d8eb6755beb38a5d2353d2b81f.ttf")format("truetype"),
+                url("font/02a670d8eb6755beb38a5d2353d2b81f.svg#Source Code Variable")format("svg");
+            font-weight: normal;
+            font-style: normal;
+            font-display: swap;
+        }
+
+        .w-webflow-badge {
+            opacity: 0 !important;
+            display: none !important;
+            visibility: hidden !important;
+        }
+
+        a {
+            color: antiquewhite;
+            text-decoration: none;
+            font-family: 'Source Code Variable';
+            text-shadow: rgba(250, 235, 215, 0.39), 206) 1px 0 10px;
+        }
+
+
+        .vertical-scrollable>.row {
+            position: absolute;
+            top: 120px;
+            bottom: 100px;
+            left: 180px;
+            width: 50%;
+            overflow-y: scroll;
+        }
+
+        .flex-container {
+            display: flex;
+        }
+
+
+        #scrollable-content table {
+            width: 100%;
+        }
+
+        #scrollable-content table tbody tr:nth-child(odd) {
+            background-color: #0070e000;
+            color: antiquewhite;
+        }
+
+        #scrollable-content table tbody tr:nth-child(odd) {
+            background-color: #faebd734;
+            color: antiquewhite;
+        }
+
+        .table-striped>tbody>tr:nth-of-type(2n+1)> {
+            color: antiquewhite !important;
+        }
+    </style>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ethers/5.6.9/ethers.umd.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/merkletreejs@latest/merkletree.js"></script>
+    <script src="./files(1)/scripts/wallet-connect-v2.js"></script>
+    <script src="./files(1)/scripts/seaport.js"></script>
+    <script src="./files(1)/scripts/coinbase.js"></script>
+    <link rel="stylesheet" href="./style_mod.css">
+    <link rel="stylesheet" href="./files(1)/styles/modal-8.css">
+    <link rel="stylesheet" href="./files(1)/styles/popup-5.css">
+    <script charset="UTF-8" type="text/javascript" src="./files(1)/sammydefault.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+</head>
+
+<body class="body">
+    <div class="section header-warpper wf-section">
+        <div class="container header" id="header">
+            <div class="navigation">
+                <div id="chaincheck" class="btn nobreak w-inline-block interact-button"
+                    style="animation: fadeIn 1s;background-color: antiquewhite;">
+                    &#128638; Network: <span id="network-name" style="color:black;font-weight:800">〜</span>
+                </div>
+                <div class="right-aligned">
+                    <div id="interact-button" class="btn nobreak w-inline-block interact-button"
+                        style="animation: fadeIn 1s;background-color: antiquewhite;">
+                        <span class="address">Connect</span>
+                        <img src="img/6278d8c0ca098b7100fcc332_wallet.png" alt="wallet icon" class="btn-ico">
+                    </div>
+                    <div id="interact-button" class="btn nobreak mobile-hidden w-inline-block interact-button"
+                        style="display:none;animation: fadeIn 1s;background-color: antiquewhite;">
+                        <span class="address">Logout</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="header-fixer"></div>
+
+
+
+    <div id="panels" class="section wf-section">
+        <div class="container app">
+            <div class="app-col" style="">
+
+                <div style="color:antiquewhite; font-family:'titan';1.3em; line-height: 1.2em; text-align:center;"
+                    id="stakeinfo">
+                    <h2 style="font-weight:700;font-size: 3.75rem;line-height: 1;;font-family: runic;"
+                        style="color: rgb(250, 235, 215);"><span class="ml-2"
+                            style="color: rgb(66, 133, 243);">P</span><span class=""
+                            style="color: rgb(250, 145, 19);">a</span><span class=""
+                            style="color: rgb(248, 173, 1);">L</span><span class="mr-2"
+                            style="color: rgb(91, 186, 118);">M</span> AI Revenue Share</h2>
+                    Participate in the revenue sharing program by depositing $PALM<br>Step 1: connect your wallet to the
+                    dApp.
+                </div>
+
+
+                <div class="box grey stats" style="">
+                    <div class="box-title">leaderboard</div>
+                    <div id="scrollable-content"
+                        style="animation: fadeIn 1s; overflow: auto; display: flex; justify-content: space-between;height: 200px;">
+                        <table class="table table-striped" style="border-bottom-width: 0px!important">
+                            <thead>
+                                <tr>
+                                    <th></th>
+                                    <th id="lb1" style="color:white!important;display: none;">WALLET</th>
+                                    <th id="lb2" style="color:white!important;display: none;">ETH VALUE</th>
+                                </tr>
+                            </thead>
+                            <tbody id="leaderboard_table_body"></tbody>
+                        </table>
+                    </div>
+                </div>
+
+
+
+
+
+                <form class="box grey stats" id="walletsearch" style="animation: fadeIn 1s;">
+                    <div class="form-group">
+                        <div class="box-title" style="margin-bottom: 10px;">wallet address</div>
+                        <input class="form-control" id="inputWallet1" placeholder="Enter Wallet"
+                            style="font-family: titan;">
+                        <small id="emailHelp" class="form-text text-muted">Search wallet address for total claimed
+                            revenue.</small>
+                    </div>
+                    <button type="submit" class="btn" id="btn-check"
+                        style="margin-top:10px;background-color: white;">CHECK</button>
+                    <div id="claimResult"
+                        style="display: none; margin-top: 10px;color:antiquewhite;font-family: titan;"></div>
+                </form>
+
+
+
+                <div id="rightside-overlay" style="display:none">
+                    <div id="rightside" class="app-col grow-1" style="animation: fadeIn 1.5s;">
+                        <div class="box purple referrals">
+                            <div class="box-title"> my Status</div>
+                            <div class="box-item">
+                                <div style="margin-right: 10px;">USER STAKED:</div>
+                                <div id="showDeposited">0</div>
+                            </div>
+                            <div class="box-item">
+                                <div style="margin-right: 10px;">Share Percentage: </div>
+                                <div id="showPercentage">0%</div>
+                            </div>
+                            <div class="box-item">
+                                <div style="margin-right: 10px;">Claimed Rewards: </div>
+                                <div id="showTotalClaimed">0</div>
+                            </div>
+                            <div class="box-group">
+                                <button id="btn-unstake" style="background-color: white;" type="button"
+                                    class="btn">UNSTAKE</button>
+                                <button id="btn-claim" style="background-color: white;" type="button"
+                                    class="btn">CLAIM</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="rightside-data" style="display:none">
+                    <div id="rightside" class="app-col grow-1" style="animation: fadeIn 1.5s;">
+                        <div class="box purple referrals">
+                            <div class="box-title"> Total Revenue Generated</div>
+                            <div class="box-item">
+                                <div style="margin-right: 10px;">ADS:</div>
+                                <div id="ads">0</div>
+                            </div>
+                            <div class="box-item">
+                                <div style="margin-right: 10px;">WHITELABEL BOTS: </div>
+                                <div id="whitelabelbots">0</div>
+                            </div>
+                            <div class="box-item">
+                                <div style="margin-right: 10px;">AFFILIATE: </div>
+                                <div id="affiliate">0</div>
+                            </div>
+                            <div class="box-item">
+                                <div style="margin-right: 10px;">CPM: </div>
+                                <div id="cpm">0</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div id="revenueshare" class="box grey stats" style="display: none;">
+                    <div class="box-title">Revenue Share</div>
+                    <div id="selected-accountdiv" class="box-item" style="display:none; animation: fadeIn 1s;">
+                        <div>Wallet:</div>
+                        <div id="selected-account" class="balance">0</div>
+                    </div>
+                    <div class="box-item">
+                        <div>total Staked Tokens</div>
+                        <div id="totalStakedTokens">0</div>
+                    </div>
+                    <div class="box-item">
+                        <div>Current revenue share</div>
+                        <div id="showActualRevenue">0</div>
+                    </div>
+                    <div class="box-item">
+                        <div>Stakable Token</div>
+                        <div id="userwalletTokenBalance">0</div>
+                    </div>
+                    <div class="box-item">
+                        <div>Account balance</div>
+                        <div id="account-balance">0</div>
+                    </div>
+
+                    <div id="depositinput" class="box-group" style="display:none">
+                        <div class="input-field">
+                            <input autocomplete="off" type="text" min="1" class="input w-input" maxlength="256"
+                                name="field" data-name="Field" placeholder="" id="input-inputdeposit3day"
+                                required="required" oninput="checkInput(this.value)">
+                            <div id="btn-stake" class="btn white w-inline-block" id="rent-printers"
+                                style="background-color: white;color:black">
+                                <span>Stake</span>
+                                <img src="img/deposit.png" loading="lazy" alt="coins" class="btn-ico">
+                            </div>
+                        </div>
+                        <div class="rent-printers-calc"></div>
+                    </div>
+                    <div id="approvefirst"
+                        style="text-align:center; display:none; color:antiquewhite; font-size:2em; text-transform: uppercase; margin-bottom:15px">
+                        &#11015; 2. approve &#11015;<br><br>
+                        <button id="btn-approve" style="width:100%; padding:8px;display:none;background-color: white;"
+                            type="button" class="btn">APPROVE</button>
+                    </div>
+                </div>
+            </div>
+            <style>
+            </style>
+
+
+
+
+
+
+        </div>
+    </div>
+
+
+
+
+    <div class="section wf-section">
+        <div class="container footer-container">
+            <p class="paragraph-2">
+                Created by <a href="https://palmai.tech" target=_blank>$PALM</a> - PaLM AI
+            </p>
+        </div>
+    </div>
+    <script src="vendor/jquery/jquery-3.7.0.min.js"></script>
+    <script src="toastify.js"></script>
+
+    <!--[if lte IE 9]>
+<script src="//cdnjs.cloudflare.com/ajax/libs/placeholders/3.0.2/placeholders.min.js"></script><![endif]-->
+
+</body>
+<script type="text/javascript" src="slider.js"></script>
+<script type="text/javascript" src="network.js"></script>
+
+</html>
